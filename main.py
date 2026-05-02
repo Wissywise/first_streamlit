@@ -63,10 +63,14 @@ with model_training:
         regr = RandomForestRegressor(max_depth=max_depth)
     else:
         regr = RandomForestRegressor(max_depth=max_depth, n_estimators=n_estimators)
-    x = taxi_data[[input_feature]]
-    y = taxi_data[['pickup_location_id']]
+    y = taxi_data[[input_feature]]
+    x = taxi_data[['pickup_location_id']]
 
-    regr.fit(x, y)
+    #regr.fit(x, y)
+    # Train the model using the selected input feature
+    regr.fit(y, x.values.ravel())
+    #prediction = regr.predict(y)
+    # Use 'x' for prediction, NOT 'y'
     prediction = regr.predict(y)
 
     disp_col.subheader('Mean absolute error of the model is:')
